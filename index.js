@@ -18,6 +18,7 @@
 
 // create a stream
 
+// 1 way
 const fs = require("fs");
 
 const http = require("http");
@@ -30,6 +31,26 @@ server.on("request", (req, res)=> {
         res.end(data.toString());
     });
     
+    //2 way
+
+    const rstream = fs.createReadStream("input.txt");
+
+    rstream.on("data", (chunkdata) => {
+        res.write(chunkdata);
+    });
+
+        rstream.on("end",() =>{
+            res.end();
+        });
+            rstream.on("error", (err) => {
+                console.log(err);
+                res.end("file not found");
+        
+        
+    });
+    // 3 way
+    const rstream = fs.createReadStream("input.txt");
+    rstream.pipe(res);
 });
 
 server.listen(8000, "127.0.0.1");
