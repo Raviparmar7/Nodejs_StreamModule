@@ -27,7 +27,7 @@ server.on("request", (req, res)=> {
     fs.readFile("input.txt", (err, data) =>
     {
         if (err) return console.log(err);
-        res.end(data.toString);
+        res.end(data.toString());
     });
     
 });
